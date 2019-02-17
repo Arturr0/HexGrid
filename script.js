@@ -1,5 +1,7 @@
 var draw = SVG('drawing').size(500, 500)
 
+var selectedHex
+
 var Hex = Honeycomb.extendHex({ size: 30,
     render(draw) 
     {
@@ -8,17 +10,23 @@ var Hex = Honeycomb.extendHex({ size: 30,
     
         this.draw = draw
             .polygon(corners.map(({ x, y }) => `${x},${y}`))
-          .fill('GreenYellow')
-          .stroke({ width: 1, color: 'DarkSlateGray' })
-          .translate(x, y)
+            .fill('MidnightBlue ')
+            .stroke({ width: 1, color: 'LightSlateGray ' })
+            .translate(x, y)
     },
     highlight() 
     {
+        if(selectedHex)
+        {
+            console.log('selectedHex is set')
+            selectedHex.draw.finish()
+        }
         this.draw
-          .stop(true, true)
-          .fill({ opacity: 1, color: 'Red' })
-          .animate(1000)
-          .fill({ opacity: 1, color: 'GreenYellow' })
+            .stop(true, true)
+            .fill({opacity: 1})
+            .animate(1000)
+            .fill({opacity: 0.75})
+            .loop(null, true)
     }
 })
 
@@ -36,5 +44,9 @@ document.addEventListener('click', ({ offsetX, offsetY }) =>
     var hex = grid.get(hexCoordinates)
   
     if (hex) 
-        {hex.highlight()}
+    {
+        selectedHex = hex
+        hex.highlight()
+    }
+        
 })
