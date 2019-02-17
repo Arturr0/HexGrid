@@ -1,0 +1,15 @@
+html, body 
+{
+  height: 100%;
+}
+
+svg 
+{
+  overflow: visible;
+}
+
+.container
+{
+  width: 50%;
+  margin: auto;
+}
