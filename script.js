@@ -21,10 +21,10 @@ var Hex = Honeycomb.extendHex({ size: 28,
             .stroke({ width: 0.5, color: 'LightSlateGray ' })
             .translate(x, y)
 
-        /*this.coord = draw
+        this.coord = draw
             .text(`${this.x},${this.y}`)
             .font({size: fontSize, anchor: 'middle', leading: 1.4, fill: 'LIGHTGRAY'})
-            .translate(centerPosition.x, centerPosition.y + (1.5 * fontSize))*/
+            .translate(centerPosition.x, centerPosition.y + (1.5 * fontSize))
     },
 
     blink() 
@@ -42,7 +42,15 @@ var Hex = Honeycomb.extendHex({ size: 28,
     {
         this.poly.finish()
             .fill({opacity: 1})
+    },
+
+    drawSun()
+    {
+        var position = this.toPoint()
+        this.sun = draw.image('./asset/png/star01.png', 32, 32)
+            .translate(position.x + 8, position.y + 8)
     }
+
 })
 
 var Grid = Honeycomb.defineGrid(Hex)
@@ -66,6 +74,11 @@ document.addEventListener('click', ({ offsetX, offsetY }) =>
     }
     if (hex) 
     {
+        if(hexCoordinates.x == 5 && hexCoordinates.y == 5)
+        {
+            console.log('hex 5, 5')
+            hex.drawSun()
+        }
         selectedHex = hex
         hex.blink()
     }
