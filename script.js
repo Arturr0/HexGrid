@@ -1,6 +1,8 @@
 var width = 500, height = 500
 var draw = SVG('drawing').size(width, height)
 
+var star_map = []
+
 var edges = draw.rect(width, height).fill('none').stroke({width: 1, color: 'gray'})
 
 var selectedHex
@@ -47,8 +49,8 @@ var Hex = Honeycomb.extendHex({ size: 28,
     drawSun()
     {
         var position = this.toPoint()
-        this.sun = draw.image('./asset/png/star01.png', 32, 32)
-            .translate(position.x + 8, position.y + 8)
+        this.sun = draw.image('./asset/png/star02.png', 16, 16)
+            .translate(position.x + 16, position.y + 16)
     }
 
 })
@@ -61,6 +63,10 @@ var grid = Grid.rectangle(
     onCreate(hex)
     {
         hex.render(draw)
+        if((hex.x == 5 && hex.y == 5) || (hex.x == 2 && hex.y == 6) || (hex.x == 7 && hex.y == 4))
+        {
+            hex.drawSun()
+        }
     }
 })
 
@@ -74,11 +80,6 @@ document.addEventListener('click', ({ offsetX, offsetY }) =>
     }
     if (hex) 
     {
-        if(hexCoordinates.x == 5 && hexCoordinates.y == 5)
-        {
-            console.log('hex 5, 5')
-            hex.drawSun()
-        }
         selectedHex = hex
         hex.blink()
     }
